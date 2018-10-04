@@ -33,9 +33,9 @@ public class LeakActivityToAsyncTaskContextActivity extends AppCompatActivity {
     // FIXED: use static class instead of inner class. Static class does not have reference to the
     // containing activity class
     private static class DoNothingTask extends AsyncTask<Void, Void, Void> {
-        private WeakReference<Context> contextWeakReference;
+        Context context;
         public DoNothingTask(Context applicationContext) {
-            contextWeakReference=new WeakReference<>(applicationContext);
+            context=applicationContext;
         }
 
         @Override
@@ -48,7 +48,7 @@ public class LeakActivityToAsyncTaskContextActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void result){
-            contextWeakReference.get().toString();
+            context.toString();
         }
     }
 }
